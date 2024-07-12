@@ -25,9 +25,9 @@ if [[ "$nowipe" = false ]]; then
 fi
 
 if [[ $disk =~ "nvme" ]]; then
-$diskPartitionSchema="${disk}p"
+  diskPartitionSchema="${disk}p"
 else
-$diskPartitionSchema="$disk"
+  diskPartitionSchema="$disk"
 fi
 
 
