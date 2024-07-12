@@ -98,8 +98,8 @@ touch /etc/locale.conf && echo "LANG=en_US.UTF-8" > /etc/locale.conf
 touch /etc/vconsole.conf && echo "KEYMAP=pl" > /etc/vconsole.conf
 touch /etc/hostname && echo "arch-T480s" > /etc/hostname
 touch /etc/hosts && cat > /etc/hosts<< EOF
-127.0.0.1 localhost
-::1 localhost
+127.0.0.1  localhost
+::1  localhost
 EOF
 
 
