@@ -105,7 +105,7 @@ EOF
 
 #grub change
 touch /etc/default/grub
-sed -i 's/^GRUB_CMDLINE_LINUX=\"\"/GRUB_CMDLINE_LINUX=\"cryptdevice=\/dev/\/sda2:archlinux\"/' /etc/default/grub
+sed -i 's/^GRUB_CMDLINE_LINUX=\"\"/GRUB_CMDLINE_LINUX=\"cryptdevice=\/dev\/sda2:archlinux\"/' /etc/default/grub
 
 #mkinitcpio
 sed -i 's/^HOOKS=.*/HOOKS=(base udev autodetect microcode modconf kms keyboard keymap consolefont block encrypt filesystems fsck)/' /etc/mkinitcpio.conf
