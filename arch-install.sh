@@ -116,7 +116,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 # add user, change shit and stuff
 
 echo $rootpasswd | passwd --stdin
-useradd -mG wheel gorgonzola5000
+useradd -mG sudo gorgonzola5000
 echo $userpasswd | passwd gorgonzola5000 --stdin
 
 systemctl enable NetworkManager
