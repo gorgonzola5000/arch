@@ -96,7 +96,7 @@ hostnamectl hostname arch-T480s
 
 #grub change
 touch /etc/default/grub
-sed -i '/^GRUB_CMDLINE_LINUX=/c/"GRUB_CMDLINE_LINUX=\"cryptdevice=${diskPartitionSchema}2:archlinux\""/' /etc/default/grub
+sed -i '/^GRUB_CMDLINE_LINUX=/c/GRUB_CMDLINE_LINUX=\"cryptdevice=${diskPartitionSchema}2:archlinux\"/' /etc/default/grub
 #mkinitcpio
 sed -i '/^HOOKS=/c\HOOKS=(base udev autodetect microcode modconf kms keyboard keymap consolefont block encrypt filesystems fsck)' /etc/mkinitcpio.conf
 mkinitcpio -P
