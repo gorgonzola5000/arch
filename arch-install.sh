@@ -82,7 +82,7 @@ chmod 0600 swap
 pacstrap -i /mnt base base-devel efibootmgr grub networkmanager nano linux linux-firmware
 
 genfstab -U /mnt > /mnt/etc/fstab
-arch-chroot /mnt
+arch-chroot /mnt /bin/bash <<END
 
 ln -sf /usr/share/zoneinfo/Europe/Warsaw /etc/localtime
 hwclock --systohc
@@ -103,7 +103,8 @@ mkinitcpio -P
 
 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
 grub-mkconfig -o /boot/grub/grub.cfg
-exit
-reboot
-
 # add user, change shit and stuff
+
+END
+
+reboot
