@@ -81,7 +81,7 @@ dd if=/dev/zero of=swap bs=1M count=4196
 mkswap swap
 chmod 0600 swap
 
-pacstrap -i /mnt base base-devel efibootmgr grub networkmanager nano linux linux-firmware
+pacstrap -i /mnt base base-devel efibootmgr grub networkmanager nano linux linux-firmware kde-applications
 
 genfstab -U /mnt > /mnt/etc/fstab
 arch-chroot /mnt /bin/bash <<END
@@ -120,6 +120,8 @@ useradd -mG wheel gorgonzola5000
 echo $userpasswd | passwd gorgonzola5000 --stdin
 
 systemctl enable NetworkManager
+mkinitcpio -P
+
 END
 
 # arch-chroot /mnt echo $rootpasswd | passwd --stdin
