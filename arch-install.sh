@@ -10,11 +10,12 @@ while getopts d:-: OPT; do
     OPTARG="${OPTARG#=}"
   fi
   case "$OPT" in
-    d | disk )	disk="$OPTARG" ;;
-    nowipe )	nowipe=true ;;
-    rootpasswd ) rootpasswd="$OPTARG" ;;
-    \? )	exit 2 ;;
-    * )		die "Illegal option --$OPT" ;;
+    d | disk )	  disk="$OPTARG" ;;
+    nowipe )	  nowipe=true ;;
+    rootpasswd )    rootpasswd="$OPTARG" ;;
+    userpasswd )    userpasswd="$OPTARG" ;;
+    \? )	  exit 2 ;;
+    * )		  die "Illegal option --$OPT" ;;
   esac
 done
 shift $((OPTIND-1))
