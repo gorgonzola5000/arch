@@ -18,7 +18,7 @@ while getopts d:-: OPT; do
 done
 shift $((OPTIND-1))
 
-if [[ "$nowipe" = false ]]
+if [[ "$nowipe" = false ]]; then
   cryptsetup open --type plain -d /dev/urandom --cipher aes-xts-plain64 --key-size 256 --hash sha256 --sector-size 4096 $disk to_be_wiped
   dd if=/dev/zero of=/dev/mapper/to_be_wiped status=progress bs=1M
   cryptsetup close to_be_wiped
