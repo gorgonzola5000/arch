@@ -82,29 +82,29 @@ chmod 0600 swap
 pacstrap -i /mnt base base-devel efibootmgr grub networkmanager nano linux linux-firmware
 
 genfstab -U /mnt > /mnt/etc/fstab
-arch-chroot /mnt /bin/bash <<END
+# arch-chroot /mnt /bin/bash <<END
 
-ln -sf /usr/share/zoneinfo/Europe/Warsaw /etc/localtime
-hwclock --systohc
+# ln -sf /usr/share/zoneinfo/Europe/Warsaw /etc/localtime
+# hwclock --systohc
 
-sed -i  '/^# *en_US.ETF-8 UTF-8/s/^# *//'' /etc/locale.gen
-locale-gen
-localectl set-locale LANG=en_US.UTF-8
-localectl set-locale LC_TIME=en_DK.UTF-8
-localectl set-keymap --no-convert pl
-hostnamectl hostname arch-T480s
+# sed -i  '/^# *en_US.ETF-8 UTF-8/s/^# *//'' /etc/locale.gen
+# locale-gen
+# localectl set-locale LANG=en_US.UTF-8
+# localectl set-locale LC_TIME=en_DK.UTF-8
+# localectl set-keymap --no-convert pl
+# hostnamectl hostname arch-T480s
 
-#grub change
-touch /etc/default/grub
-sed -i '/^GRUB_CMDLINE_LINUX=/c/GRUB_CMDLINE_LINUX=\"cryptdevice=${diskPartitionSchema}2:archlinux\"/' /etc/default/grub
-#mkinitcpio
-sed -i '/^HOOKS=/c\HOOKS=(base udev autodetect microcode modconf kms keyboard keymap consolefont block encrypt filesystems fsck)' /etc/mkinitcpio.conf
-mkinitcpio -P
+# #grub change
+# touch /etc/default/grub
+# sed -i '/^GRUB_CMDLINE_LINUX=/c/GRUB_CMDLINE_LINUX=\"cryptdevice=${diskPartitionSchema}2:archlinux\"/' /etc/default/grub
+# #mkinitcpio
+# sed -i '/^HOOKS=/c\HOOKS=(base udev autodetect microcode modconf kms keyboard keymap consolefont block encrypt filesystems fsck)' /etc/mkinitcpio.conf
+# mkinitcpio -P
 
-grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
-grub-mkconfig -o /boot/grub/grub.cfg
-# add user, change shit and stuff
+# grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
+# grub-mkconfig -o /boot/grub/grub.cfg
+# # add user, change shit and stuff
 
-END
+# END
 
-reboot
+# reboot
