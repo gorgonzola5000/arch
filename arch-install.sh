@@ -25,9 +25,9 @@ if [[ "$nowipe" = false ]]; then
 fi
 
 if [[ $disk =~ "nvme" ]]; then
-$diskPartitionSchema = "${disk}p"
+$diskPartitionSchema="${disk}p"
 else
-$diskPartitionSchema = "$disk"
+$diskPartitionSchema="$disk"
 fi
 
 
@@ -54,7 +54,7 @@ modprobe dm-mod
 
 cryptsetup luksFormat --type luks2 --cipher aes-xts-plain64 --hash sha256 --iter-time 3000 --key-size 256 --pbkdf argon2id --use-urandom --verify-passphrase "${diskPartitionSchema}2"
 
-cryptsetup open "$diskPartitionSchema}2" archlinux
+cryptsetup open "${diskPartitionSchema}2" archlinux
 mkfs.btrfs -L root /dev/mapper/archlinux
 # cryptsetup close root
 
