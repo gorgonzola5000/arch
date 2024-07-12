@@ -82,29 +82,32 @@ chmod 0600 swap
 pacstrap -i /mnt base base-devel efibootmgr grub networkmanager nano linux linux-firmware
 
 genfstab -U /mnt > /mnt/etc/fstab
-# arch-chroot /mnt /bin/bash <<END
+arch-chroot /mnt /bin/bash <<END
 
-# ln -sf /usr/share/zoneinfo/Europe/Warsaw /etc/localtime
-# hwclock --systohc
+ln -sf /usr/share/zoneinfo/Europe/Warsaw /etc/localtime
+hwclock --systohc
 
-# sed -i  '/^# *en_US.ETF-8 UTF-8/s/^# *//'' /etc/locale.gen
-# locale-gen
-# localectl set-locale LANG=en_US.UTF-8
-# localectl set-locale LC_TIME=en_DK.UTF-8
-# localectl set-keymap --no-convert pl
-# hostnamectl hostname arch-T480s
+sed -i  '/^# *en_US.UTF-8 UTF-8/s/^# *//' /etc/locale.gen
+sed -i  '/^# *en_DK.UTF-8 UTF-8/s/^# *//' /etc/locale.gen
+sed -i  '/^# *pl_PL.UTF-8 UTF-8/s/^# *//' /etc/locale.gen
 
-# #grub change
-# touch /etc/default/grub
-# sed -i '/^GRUB_CMDLINE_LINUX=/c/GRUB_CMDLINE_LINUX=\"cryptdevice=${diskPartitionSchema}2:archlinux\"/' /etc/default/grub
-# #mkinitcpio
-# sed -i '/^HOOKS=/c\HOOKS=(base udev autodetect microcode modconf kms keyboard keymap consolefont block encrypt filesystems fsck)' /etc/mkinitcpio.conf
-# mkinitcpio -P
+locale-gen
+touch /etc/locale.conf && echo "LANG=en_US.UTF-8" > /etc/locale.conf
+touch /etc/vconsole.conf && echo "KEYMAP=pl" > /etc/vconsole.conf
+touch /etc/hostname && echo "arch-T480s" > /etc/hostname
 
-# grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
-# grub-mkconfig -o /boot/grub/grub.cfg
-# # add user, change shit and stuff
+#grub change
+touch /etc/default/grub
+sed -i 's/^GRUB_CMDLINE_LINUX=\"\"/GRUB_CMDLINE_LINUX=\"cryptdevice=\/dev/\/sda2:archlinux\"/' /etc/default/grub
 
-# END
+#mkinitcpio
+sed -i 's/^HOOKS=.*/HOOKS=(base udev autodetect microcode modconf kms keyboard keymap consolefont block encrypt filesystems fsck)/' /etc/mkinitcpio.conf
+mkinitcpio -P
 
-# reboot
+grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
+grub-mkconfig -o /boot/grub/grub.cfg
+# add user, change shit and stuff
+
+END
+
+reboot
