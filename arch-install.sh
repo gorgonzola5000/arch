@@ -12,6 +12,7 @@ while getopts d:-: OPT; do
   case "$OPT" in
     d | disk )	disk="$OPTARG" ;;
     nowipe )	nowipe=true ;;
+    rootpasswd ) rootpasswd="$OPTARG" ;;
     \? )	exit 2 ;;
     * )		die "Illegal option --$OPT" ;;
   esac
@@ -95,6 +96,11 @@ locale-gen
 touch /etc/locale.conf && echo "LANG=en_US.UTF-8" > /etc/locale.conf
 touch /etc/vconsole.conf && echo "KEYMAP=pl" > /etc/vconsole.conf
 touch /etc/hostname && echo "arch-T480s" > /etc/hostname
+touch /etc/hosts && cat > /etc/hosts<< EOF
+127.0.0.1 localhost
+::1 localhost
+EOF
+
 
 #grub change
 touch /etc/default/grub
@@ -108,6 +114,14 @@ grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
 grub-mkconfig -o /boot/grub/grub.cfg
 # add user, change shit and stuff
 
+echo $rootpasswd | passwd --stdin
+useradd -mG wheel gorgonzola5000
+echo $userpasswd | passwd gorgonzola5000 --stdin
+
+systemctl enable NetworkManager
 END
 
-reboot
+# arch-chroot /mnt echo $rootpasswd | passwd --stdin
+
+
+# reboot
