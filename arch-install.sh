@@ -66,11 +66,11 @@ btrfs subvolume create snapshots
 
 cd /
 umount -R /mnt
-mount -t btrfs -o subvol=root /dev/mapper/root /mnt
+mount -t btrfs -o subvol=root /dev/mapper/archlinux /mnt
 mkdir /mnt/home
-mount -t btrfs -o subvol=home /dev/mapper/root /mnt/home
+mount -t btrfs -o subvol=home /dev/mapper/archlinux /mnt/home
 mkdir /mnt/snapshots
-mount -t btrfs -o subvol=snapshots /dev/mapper/root /mnt/snapshots
+mount -t btrfs -o subvol=snapshots /dev/mapper/archlinux /mnt/snapshots
 mkdir /mnt/boot
 mount "${diskPartitionSchema}1" /mnt/boot
 
