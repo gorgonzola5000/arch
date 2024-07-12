@@ -113,15 +113,14 @@ mkinitcpio -P
 
 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
 grub-mkconfig -o /boot/grub/grub.cfg
-# add user, change shit and stuff
 
 echo $rootpasswd | passwd --stdin
-useradd -mG sudo gorgonzola5000
+useradd -mG gorgonzola5000
 echo $userpasswd | passwd gorgonzola5000 --stdin
+groupadd sudo
+usermod -aG sudo gorgonzola5000
 
 systemctl enable NetworkManager
-mkinitcpio -P
-
 END
 
 # arch-chroot /mnt echo $rootpasswd | passwd --stdin
