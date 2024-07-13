@@ -142,7 +142,5 @@ usermod -aG sudo gorgonzola5000
 systemctl enable NetworkManager
 END
 
-# arch-chroot /mnt echo $rootpasswd | passwd --stdin
-
 
 # reboot
