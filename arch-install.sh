@@ -2,6 +2,25 @@
 
 die() { echo"$*" >&2; exit2; }
 needs_arg() { if [ -z "$OPTARG" ]; then die "No arg for --$OPT option"; fi; }
+usage() {
+  cat <<HELP_USAGE
+Usage:  arch-install [options]
+
+Options:
+  -d --disk
+  disk to install arch to
+  --rootpasswd
+  root password for OS
+  --userpasswd
+  user password for OS
+  --wipe
+  don't wipe disk (that's the default)
+
+HELP_USAGE
+}
+
+#defaults
+wipe=false
 
 while getopts d:-: OPT; do
   if [ "$OPT" = "-" ]; then
@@ -20,7 +39,7 @@ while getopts d:-: OPT; do
 done
 shift $((OPTIND-1))
 
-if [[ "$nowipe" = false ]]; then
+if [[ "$wipe" = true ]]; then
   cryptsetup open --type plain -d /dev/urandom --cipher aes-xts-plain64 --key-size 256 --hash sha256 --sector-size 4096 $disk to_be_wiped
   dd if=/dev/zero of=/dev/mapper/to_be_wiped status=progress bs=1M
   cryptsetup close to_be_wiped
